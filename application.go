@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 type Application struct {
@@ -21,7 +22,7 @@ func (application *Application) Run(logging bool) {
 
 	fmt.Printf("Starting server on http://0.0.0.0:%d", application.port)
 
-	err := http.ListenAndServe(":"+string(application.port), application.mux)
+	err := http.ListenAndServe(":"+strconv.Itoa(application.port), application.mux)
 
 	log.Fatal(err)
 }
