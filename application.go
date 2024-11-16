@@ -17,6 +17,10 @@ func InitApplication(port int) *Application {
 	return &Application{mux: http.NewServeMux(), router: NewRouter(), port: port}
 }
 
+func (application *Application) GetRouter() *Router {
+	return application.router
+}
+
 func (application *Application) Run(logging bool) {
 	application.mux.HandleFunc("/", application.router.ServeHTTP)
 
