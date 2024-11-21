@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"sort"
 	"strings"
+	"sync"
 )
 
 type Router struct {
@@ -14,8 +15,17 @@ type Router struct {
 	routeTable  map[string][]*Node
 }
 
+var (
+	routerInstance *Router
+	once           sync.Once
+)
+
 func NewRouter() *Router {
-	return &Router{NotFoundHandler: defaultNotFoundHandler, routeTable: make(map[string][]*Node)}
+	once.Do(func() {
+		routerInstance = &Router{NotFoundHandler: defaultNotFoundHandler, routeTable: make(map[string][]*Node)}
+	})
+
+	return routerInstance
 }
 
 func (router *Router) Print() {
