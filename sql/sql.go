@@ -23,7 +23,7 @@ type QueryParams struct {
 	Offset  *int
 }
 
-func BuildWhereCondition(params QueryParams) (string, interface{}) {
+func BuildWhereCondition(params QueryParams) (string, []interface{}) {
 	var query strings.Builder
 	var values []interface{}
 
@@ -54,7 +54,7 @@ func BuildWhereCondition(params QueryParams) (string, interface{}) {
 	if params.Offset != nil {
 		query.WriteString(fmt.Sprintf(" OFFSET %d", *params.Offset))
 	}
-	
+
 	return query.String(), values
 }
 
