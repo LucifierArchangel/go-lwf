@@ -19,6 +19,12 @@ var ctxPool = sync.Pool{
 	},
 }
 
+func (ctx *Context) Status(code int) *Context {
+	ctx.Writer.WriteHeader(code)
+
+	return ctx
+}
+
 func (ctx *Context) JSON(data map[string]interface{}) {
 	body, err := json.Marshal(data)
 
