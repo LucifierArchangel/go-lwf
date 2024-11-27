@@ -153,14 +153,20 @@ func (router *Router) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 		}
 	}
 
-	if !ctx.Closed {
-		for _, middleware := range router.middlewares {
+	fmt.Println(ctx.Closed)
+
+	for _, middleware := range router.middlewares {
+		fmt.Println("middlewares", ctx.Closed)
+
+		if !ctx.Closed {
 			middleware(ctx)
 		}
 	}
 
-	if !ctx.Closed {
-		for _, handler := range path[len(path)-1].handlers {
+	for _, handler := range path[len(path)-1].handlers {
+		fmt.Println("handlers", ctx.Closed)
+
+		if !ctx.Closed {
 			handler(ctx)
 		}
 	}
