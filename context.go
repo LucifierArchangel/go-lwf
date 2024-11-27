@@ -49,6 +49,7 @@ func (ctx *Context) JSON(data map[string]interface{}) {
 
 func (ctx *Context) Send(data M) {
 	ctx.JSON(data)
+	ctx.Closed = true
 	ctx.Writer.Write([]byte(ctx.Response.Body))
 }
 
