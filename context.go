@@ -12,6 +12,7 @@ type Context struct {
 	Writer   http.ResponseWriter
 	Response Response
 	Closed   bool
+	sync.RWMutex
 }
 
 var ctxPool = sync.Pool{
@@ -44,12 +45,13 @@ func (ctx *Context) JSON(data map[string]interface{}) {
 	if ctx.Response.Status == 0 {
 		ctx.Response.Status = 200
 	}
-
 }
 
 func (ctx *Context) Send(data M) {
 	ctx.JSON(data)
+	ctx.Lock()
 	ctx.Closed = true
+	defer ctx.Unlock()
 	ctx.Writer.Write([]byte(ctx.Response.Body))
 }
 
