@@ -13,5 +13,8 @@ func HandlerFunc(f http.HandlerFunc) Handler {
 func defaultNotFoundHandler(ctx *Context) {
 	ctx.Writer.WriteHeader(http.StatusNotFound)
 	ctx.Writer.Write([]byte("404 page not found"))
+	
+	ctx.Lock()
 	ctx.Closed = true
+	ctx.Unlock()
 }

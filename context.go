@@ -49,9 +49,11 @@ func (ctx *Context) JSON(data map[string]interface{}) {
 
 func (ctx *Context) Send(data M) {
 	ctx.JSON(data)
+
 	ctx.Lock()
 	ctx.Closed = true
-	defer ctx.Unlock()
+	ctx.Unlock()
+
 	ctx.Writer.Write([]byte(ctx.Response.Body))
 }
 
