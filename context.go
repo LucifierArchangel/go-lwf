@@ -46,6 +46,10 @@ func (ctx *Context) JSON(data map[string]interface{}) {
 
 }
 
+func (ctx *Context) Send() {
+	ctx.Writer.Write([]byte(ctx.Response.Body))
+}
+
 func (ctx *Context) InternalServerError() {
 	ctx.Response.Status = 500
 	ctx.Response.Body = "Internal Server Error"

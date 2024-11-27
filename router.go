@@ -158,7 +158,7 @@ func (router *Router) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 		handler(ctx)
 	}
 
-	ctx.Writer.Write([]byte(ctx.Response.Body))
+	//ctx.Writer.Write([]byte(ctx.Response.Body))
 }
 
 func (router *Router) Group(path string) *RouterGroup {
