@@ -120,6 +120,9 @@ func (router *Router) Any(path string, handlers ...Handler) {
 
 func (router *Router) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	ctx := getContext()
+
+	ctx.Closed = false
+
 	defer putContext(ctx)
 
 	ctx.Params.Reset()
@@ -150,12 +153,16 @@ func (router *Router) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 		}
 	}
 
-	for _, middleware := range router.middlewares {
-		middleware(ctx)
+	if !ctx.Closed {
+		for _, middleware := range router.middlewares {
+			middleware(ctx)
+		}
 	}
 
-	for _, handler := range path[len(path)-1].handlers {
-		handler(ctx)
+	if !ctx.Closed {
+		for _, handler := range path[len(path)-1].handlers {
+			handler(ctx)
+		}
 	}
 
 	//ctx.Writer.Write([]byte(ctx.Response.Body))

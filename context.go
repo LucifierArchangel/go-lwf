@@ -11,6 +11,7 @@ type Context struct {
 	Request  *http.Request
 	Writer   http.ResponseWriter
 	Response Response
+	Closed   bool
 }
 
 var ctxPool = sync.Pool{
