@@ -119,10 +119,14 @@ func (router *Router) Any(path string, handlers ...Handler) {
 }
 
 func (router *Router) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+	fmt.Println("SERVE HTTP")
+	fmt.Println(req.Method, req.URL.Path)
+	fmt.Println(req.Header.Get("Origin"))
+
 	res.Header().Set("Access-Control-Allow-Origin", "*")
 	res.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, PATCH")
 	res.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
-	
+
 	ctx := getContext()
 
 	ctx.Closed = false
