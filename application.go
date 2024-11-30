@@ -24,7 +24,7 @@ func (application *Application) GetRouter() *Router {
 func (application *Application) Run(logging bool) {
 	application.mux.HandleFunc("/", application.router.ServeHTTP)
 
-	fmt.Printf("Starting server on http://0.0.0.0:%d", application.port)
+	fmt.Printf("Starting server on http://0.0.0.0:%d\n", application.port)
 
 	err := http.ListenAndServe(":"+strconv.Itoa(application.port), application.mux)
 
