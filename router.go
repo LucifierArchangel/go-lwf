@@ -124,8 +124,6 @@ func (router *Router) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	fmt.Println(req.Header.Get("Origin"))
 
 	if req.Method == "OPTIONS" {
-		res.Write([]byte("{status: \"Ok\""))
-
 		return
 	}
 
