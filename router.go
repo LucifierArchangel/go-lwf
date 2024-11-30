@@ -123,6 +123,12 @@ func (router *Router) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 	fmt.Println(req.Method, req.URL.Path)
 	fmt.Println(req.Header.Get("Origin"))
 
+	if req.Method == "OPTIONS" {
+		res.Write([]byte("{status: \"Ok\""))
+
+		return
+	}
+
 	res.Header().Set("Access-Control-Allow-Origin", "*")
 	res.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, PATCH")
 	res.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
