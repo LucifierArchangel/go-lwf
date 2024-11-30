@@ -2,6 +2,7 @@ package golwf
 
 import (
 	"fmt"
+	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"strconv"
@@ -24,9 +25,16 @@ func (application *Application) GetRouter() *Router {
 func (application *Application) Run(logging bool) {
 	application.mux.HandleFunc("/", application.router.ServeHTTP)
 
+	handler := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowCredentials: true,
+		Debug:            true,
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD", "CONNECT", "TRACE"},
+	}).Handler(application.mux)
+
 	fmt.Printf("Starting server on http://0.0.0.0:%d\n", application.port)
 
-	err := http.ListenAndServe(":"+strconv.Itoa(application.port), application.mux)
+	err := http.ListenAndServe(":"+strconv.Itoa(application.port), handler)
 
 	log.Fatal(err)
 }
